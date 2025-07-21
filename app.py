@@ -15,22 +15,29 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
 
-# 🔐 Load environment variables
-load_dotenv()
 
 # Constants
 MEMORY_PATH = "memory_store"
 
+from dotenv import load_dotenv
+import os
+
+# 🔐 Load environment variables
+load_dotenv()
+
+# ✅ Fetch from env variable
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
 # 🤖 Initialize Gemini LLM
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
-    google_api_key="AIzaSyCpGk_T3B-qBlKMVfBev2sgacms-82-k8I"  # Get from environment variable
+    google_api_key=GOOGLE_API_KEY
 )
 
 # 🔍 Initialize Gemini Embeddings
 embeddings = GoogleGenerativeAIEmbeddings(
     model="models/embedding-001",
-    google_api_key="AIzaSyCpGk_T3B-qBlKMVfBev2sgacms-82-k8I"  # Get from environment variable
+    google_api_key=GOOGLE_API_KEY
 )
 
 
@@ -175,7 +182,7 @@ def main():
         """)
 
         # API key input (alternative to .venvv)
-        api_key = st.text_input("Google API Key", type="password",
+        api_key = st.text_input("Google API Key if you have your advance model otherwise not required", type="password",
                                 help="Required if not in .venvv file",
                                 value=os.getenv("GOOGLE_API_KEY", ""))
 
