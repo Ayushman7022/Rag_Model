@@ -38,3 +38,4 @@ venv\Scripts\activate         # Windows
 
 # Install dependencies
 pip install -r requirements.txt
+"# Rag_Model" 
