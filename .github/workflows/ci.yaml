@@ -1,0 +1,27 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches: [ main ]  # or whichever branch triggers deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Decode and save GCP credentials
+      run: |
+        echo "${{ secrets.GCP_KEY_BASE64 }}" | base64 -d > key.json
+
+    - name: Authenticate with GCP
+      run: |
+        gcloud auth activate-service-account --key-file=key.json
+        gcloud config set project bold-network-442413  # your GCP project ID
+
+    # Example: Deploy to App Engine
+    - name: Deploy to App Engine
+      run: |
+        gcloud app deploy --quiet
