@@ -1,27 +1,37 @@
-name: Deploy to GCP
+name: CI/CD to GKE
 
 on:
   push:
-    branches: [ main ]  # or whichever branch triggers deploy
+    branches:
+      - main  # or your desired branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Decode and save GCP credentials
-      run: |
-        echo "${{ secrets.GCP_KEY_BASE64 }}" | base64 -d > key.json
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-    - name: Authenticate with GCP
-      run: |
-        gcloud auth activate-service-account --key-file=key.json
-        gcloud config set project bold-network-442413  # your GCP project ID
+      - name: Decode and save GCP credentials
+        run: |
+          echo "${{ secrets.GCP_KEY_BASE64 }}" | base64 -d > key.json
 
-    # Example: Deploy to App Engine
-    - name: Deploy to App Engine
-      run: |
-        gcloud app deploy --quiet
+      - name: Authenticate with GCP
+        run: |
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud config set project bold-network-442413-r6
+          gcloud auth configure-docker asia-south1-docker.pkg.dev
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest .
+          docker push asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest
+
+      - name: Get GKE credentials and update deployment
+        run: |
+          gcloud container clusters get-credentials rag-cluster --region asia-south1
+          kubectl set image deployment/rag-app-deployment rag-app=asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest -n rag-ns
