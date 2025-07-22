@@ -26,6 +26,10 @@ jobs:
           gcloud config set project bold-network-442413-r6
           gcloud auth configure-docker asia-south1-docker.pkg.dev
 
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin --quiet
+
       - name: Build and Push Docker image
         run: |
           docker build -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest .
