@@ -172,8 +172,7 @@ def main():
     memory_store = initialize_memory_store()
 
     # Configure page
-    st.set_page_config(page_title="Document QA with Gemini", page_icon="📄")
-
+   
     # Sidebar
    
 
