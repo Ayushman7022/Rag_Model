@@ -39,6 +39,13 @@ jobs:
         run: |
           gcloud container clusters get-credentials rag-cluster --region asia-south1
 
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+
+
       - name: Deploy to GKE
         run: |
           kubectl set image deployment/rag-app-deployment rag-app=asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest -n rag-ns
