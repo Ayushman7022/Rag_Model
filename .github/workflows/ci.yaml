@@ -26,9 +26,10 @@ jobs:
           gcloud config set project bold-network-442413-r6
           gcloud auth configure-docker asia-south1-docker.pkg.dev
 
-      - name: Install gke-gcloud-auth-plugin
+      - name: Install gke-gcloud-auth-plugin (via apt)
         run: |
-          gcloud components install gke-gcloud-auth-plugin --quiet
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
 
       - name: Build and Push Docker image
         run: |
