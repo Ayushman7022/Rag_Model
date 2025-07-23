@@ -29,12 +29,14 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest .
- 
+          docker build -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest \
+          -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:${{ github.sha }} .
+
+
       - name: Push Docker image
         run: |
           docker push asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest
-
+          docker push asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:${{ github.sha }}
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials rag-cluster --region asia-south1
