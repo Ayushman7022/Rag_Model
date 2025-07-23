@@ -30,7 +30,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest .
-
+ 
       - name: Push Docker image
         run: |
           docker push asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest
@@ -38,6 +38,18 @@ jobs:
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials rag-cluster --region asia-south1
+       
+      - name: Apply Namespace
+        run: kubectl apply -f namespace.yaml
+
+      - name: Wait for namespace
+        run: kubectl wait --for=condition=Established --timeout=10s namespace/rag-ns
+
+      - name: Apply Deployment
+        run: kubectl apply -f deployment.yaml
+
+      - name: Apply Service
+        run: kubectl apply -f service.yaml
 
       
 
@@ -46,8 +58,4 @@ jobs:
         run: |
           kubectl set image deployment/rag-app-deployment rag-app=asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest -n rag-ns
 
-      - name: Apply Kubernetes manifests
-        run: |
-          kubectl apply -f namespace.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+     
