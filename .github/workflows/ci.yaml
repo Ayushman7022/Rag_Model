@@ -3,7 +3,7 @@ name: Deploy to GKE
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main  # Trigger deployment only on main branch
 
 jobs:
   deploy:
@@ -13,12 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up GCP SDK
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_KEY }}'
+
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          service_account_key: ${{ secrets.GCP_KEY }}
           project_id: bold-network-442413-r6
-          export_default_credentials: true
+          install_components: 'gke-gcloud-auth-plugin'
 
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
