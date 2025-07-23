@@ -54,8 +54,8 @@ jobs:
       
 
 
-      - name: Deploy to GKE
-        run: |
-          kubectl set image deployment/rag-app-deployment rag-app=asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:latest -n rag-ns
+      - name: Set image to deployment
+        run: kubectl set image deployment/rag-app-deployment rag-app=asia-south1-docker.pkg.dev/bold-network-442413-r6/rag-repo/rag-app:${{ github.sha }} -n rag-ns
+
 
      
