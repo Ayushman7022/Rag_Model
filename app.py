@@ -5,6 +5,9 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import streamlit as st
+# ✅ MUST be the first Streamlit call
+st.set_page_config(page_title="Document QA with Gemini", page_icon="📄")
+
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader, UnstructuredExcelLoader
