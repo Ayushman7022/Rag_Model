@@ -16,7 +16,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
 
 
-# Constant
+# Constan
 MEMORY_PATH = "memory_store"
 
 from dotenv import load_dotenv
