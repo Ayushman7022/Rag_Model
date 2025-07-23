@@ -42,8 +42,8 @@ jobs:
       - name: Apply Namespace
         run: kubectl apply -f namespace.yaml
 
-      - name: Wait for namespace
-        run: kubectl wait --for=condition=Established --timeout=60s namespace/rag-ns
+      - name: Wait for namespace creation (basic sleep)
+        run: sleep 5
 
       - name: Apply Deployment
         run: kubectl apply -f deployment.yaml
