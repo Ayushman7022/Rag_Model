@@ -43,7 +43,7 @@ jobs:
         run: kubectl apply -f namespace.yaml
 
       - name: Wait for namespace
-        run: kubectl wait --for=condition=Established --timeout=10s namespace/rag-ns
+        run: kubectl wait --for=condition=Established --timeout=60 namespace/rag-ns
 
       - name: Apply Deployment
         run: kubectl apply -f deployment.yaml
