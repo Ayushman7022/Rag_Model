@@ -172,31 +172,7 @@ def main():
     st.set_page_config(page_title="Document QA with Gemini", page_icon="📄")
 
     # Sidebar
-    with st.sidebar:
-        st.title("Settings")
-        st.markdown("""
-        **How to use:**
-        1. Upload a PDF or Excel file
-        2. Ask questions about its content
-        3. View answers with sources
-        """)
-
-        # API key input (alternative to .venvv)
-        api_key = st.text_input("Google API Key if you have your advance model otherwise not required", type="password",
-                                help="Required if not in .venvv file",
-                                value=os.getenv("GOOGLE_API_KEY", ""))
-
-        if api_key:
-            os.environ["GOOGLE_API_KEY"] = api_key
-            st.success("API key set!")
-
-        st.divider()
-        if st.button("Clear Conversation Memory"):
-            memory_store = FAISS.from_texts([""], embeddings)
-            memory_store.delete([memory_store.index_to_docstore_id[0]])
-            memory_store.save_local(MEMORY_PATH)
-            st.success("Memory cleared!")
-            st.rerun()
+   
 
     # Main content
     st.title("📄 Document QA with Gemini")
