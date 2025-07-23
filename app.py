@@ -22,7 +22,7 @@ MEMORY_PATH = "memory_store"
 from dotenv import load_dotenv
 import os
 
-# 🔐 Load environment variables
+# 🔐 Load environment variable
 load_dotenv()
 
 # ✅ Fetch from env variable
