@@ -1,41 +1,89 @@
-# 📄 RAG-powered Document QA App with Gemini & Streamlit
+🚀 Retrieval-Augmented Generation (RAG) App with Gemini Pro on GKE
 
-This project allows you to upload PDFs or Excel files and ask questions based on their content. It uses Google's Gemini model and LangChain's RAG (Retrieval-Augmented Generation) pipeline, powered by Streamlit.
+http://34.93.179.46/
 
----
 
-## 🚀 Features
+This project implements a scalable Retrieval-Augmented Generation (RAG) system where users can upload documents and ask questions. The app retrieves relevant content using FAISS and answers using Gemini Pro LLM. It is deployed on Google Kubernetes Engine (GKE) with full CI/CD using GitHub Actions.
 
-- 📁 Upload PDF or Excel documents
-- 🤖 Ask questions and get contextual answers
-- 🧠 Maintains memory across chats
-- 💾 Saves past memory using FAISS vector store
-- 🔍 Displays sources used to answer
+📌 Features
+✅ Upload PDFs and ask context-based questions
 
----
+✅ Document chunking and vector storage using FAISS
 
-## 🧰 Tech Stack
+✅ Prompting handled by Gemini Pro via API
 
-- [Streamlit](https://streamlit.io/)
-- [LangChain](https://www.langchain.com/)
-- [FAISS](https://github.com/facebookresearch/faiss)
-- [Gemini Pro / Flash (via `langchain-google-genai`)](https://python.langchain.com/docs/integrations/llms/google_generative_ai/)
-- Python 3.10+
+✅ Frontend built with Streamlit
 
----
+✅ Backend powered by FastAPI
 
-## 📦 Installation
+✅ Containerized with Docker
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+✅ Continuous Deployment via GitHub Actions
 
-# (Optional) Create virtual environment
-python -m venv venv
-source venv/bin/activate      # Linux/macOS
-venv\Scripts\activate         # Windows
+✅ Scalable deployment on Google Kubernetes Engine (GKE)
 
-# Install dependencies
-pip install -r requirements.txt
-"# Rag_Model" 
+✅ Google Cloud Artifact Registry for container image storage
+
+🛠️ Tech Stack
+Layer	Technology
+Frontend	Streamlit
+Backend	FastAPI
+Vector DB	FAISS
+LLM API	Gemini Pro
+Containerization	Docker
+CI/CD	GitHub Actions
+Cloud	Google Cloud Platform (GCP)
+Orchestration	Kubernetes (GKE)
+Image Registry	Google Artifact Registry
+
+📂 Folder Structure
+bash
+Copy
+Edit
+📦 rag-app
+ ┣ 📁 app
+ ┃ ┣ 📜 app.py                 # Streamlit frontend
+ ┃ ┣ 📜 backend.py             # FastAPI endpoints
+ ┃ ┣ 📜 vector_store.py        # FAISS logic
+ ┃ ┣ 📜 llm_interface.py       # Gemini Pro prompt handler
+ ┃ ┗ 📜 utils.py               # Preprocessing utilities
+ ┣ 📜 Dockerfile               # Docker config
+ ┣ 📜 requirements.txt         # Python dependencies
+ ┣ 📁 k8s                      # Kubernetes YAMLs
+ ┃ ┣ 📜 namespace.yaml
+ ┃ ┣ 📜 deployment.yaml
+ ┃ ┗ 📜 service.yaml
+ ┣ 📜 .github/workflows/deploy.yaml  # GitHub Actions CI/CD
+ ┗ 📜 README.md
+🚀 Setup & Deployment
+1. Clone the Repo
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/rag-app.git
+cd rag-app
+2. Add Your Environment Variables
+Set your Gemini API key, etc.
+
+3. Build Docker Image Locally (optional)
+bash
+Copy
+Edit
+docker build -t rag-app .
+4. Kubernetes Deployment on GKE
+bash
+Copy
+Edit
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+5. GitHub Actions CI/CD
+Ensure the GitHub workflow pushes Docker image to Artifact Registry and deploys updated pods automatically.
+
+🔗 Live Demo
+Once deployed, access the app using the external IP of the GKE service:
+
+
+
+📄 License
+This project is under the MIT License.
